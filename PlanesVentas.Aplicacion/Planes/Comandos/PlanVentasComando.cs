@@ -16,5 +16,13 @@ namespace PlanesVentas.Aplicacion.Planes.Comandos
         [Required(ErrorMessage = "El campo FechaFinal es obligatorio")]
         DateOnly FechaFinal
         ) : IRequest<PlanVentasOut>;
-    
+
+    public record AgregarProductos(
+        [Required(ErrorMessage = "El campo IdPlanVenta es obligatorio")]
+        Guid IdPlanVenta,
+        [Required(ErrorMessage = "Los productos son obligatorios")]
+        List<ProductoPlanVentaIn> Productos
+        ) : IRequest<PlanVentasOut>;
+
+
 }

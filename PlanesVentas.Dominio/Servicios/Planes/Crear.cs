@@ -14,7 +14,7 @@ namespace PlanesVentas.Dominio.Servicios.Planes
             PlanVenta output;
 
             planVenta.Id = Guid.NewGuid();
-            planVenta.FechaCreacion = DateTime.Now;
+            planVenta.FechaCreacion = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified);
             output = await _planVentaRepositorio.Crear(planVenta);
             return output;
         }
