@@ -5,6 +5,7 @@ using MediatR;
 using PlanesVentas.Aplicacion.Comun;
 using PlanesVentas.Aplicacion.Planes.Dto;
 using PlanesVentas.Dominio.Servicios.Planes;
+using PlanesVentas.Dominio.Servicios.Productos;
 using System.Net;
 
 namespace PlanesVentas.Aplicacion.Planes.Consultas
@@ -12,12 +13,14 @@ namespace PlanesVentas.Aplicacion.Planes.Consultas
     public class PlanesVentasConsultaHandler : IRequestHandler<PlanesVentasConsulta, PlanVentasListOut>
     {
         private readonly IMapper _mapper;
-        private readonly Consultar _servicio;
+        private readonly ConsultarPlanes _servicioPlanes;
+        private readonly ConsultarProductos _servicioProductos;
 
-        public PlanesVentasConsultaHandler(IMapper mapper, Consultar servicio)
+        public PlanesVentasConsultaHandler(IMapper mapper, ConsultarPlanes servicio, ConsultarProductos servicioProductos)
         {
             _mapper = mapper;
-            _servicio = servicio;
+            _servicioPlanes = servicio;
+            _servicioProductos = servicioProductos;
         }
 
         public async Task<PlanVentasListOut> Handle(PlanesVentasConsulta request, CancellationToken cancellationToken)
@@ -30,11 +33,19 @@ namespace PlanesVentas.Aplicacion.Planes.Consultas
             try
             {
 
-                var planes = await _servicio.Ejecutar() ?? [];
+                var planes = await _servicioPlanes.Ejecutar() ?? [];
 
                 if (planes.Count > 0)
                 {
                     planes.ForEach(plan => output.PlanesVentas.Add(_mapper.Map<PlanVentaDto>(plan)));
+
+                    foreach (PlanVentaDto producto in output.PlanesVentas) 
+                    {
+                        var productos = await _servicioProductos.Ejecutar(producto.Id) ?? [];
+                        producto.Productos = _mapper.Map<List<ProductoPlanVentaIn>>(productos);
+
+                    }
+
                     output.Resultado = Resultado.Exitoso;
                     output.Mensaje = "Consulta exitosa";
                     output.Status = HttpStatusCode.OK;

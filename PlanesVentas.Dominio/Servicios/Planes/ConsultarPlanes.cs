@@ -4,7 +4,7 @@ using PlanesVentas.Dominio.Puertos.Repositorios;
 
 namespace PlanesVentas.Dominio.Servicios.Planes
 {
-    public class Consultar(IPlanVentaRepositorio planVentaRepositorio)
+    public class ConsultarPlanes(IPlanVentaRepositorio planVentaRepositorio)
     {
         private readonly IPlanVentaRepositorio _planVentaRepositorio = planVentaRepositorio;
 

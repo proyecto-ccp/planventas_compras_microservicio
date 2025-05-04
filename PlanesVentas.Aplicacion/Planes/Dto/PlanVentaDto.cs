@@ -14,13 +14,13 @@ namespace PlanesVentas.Aplicacion.Planes.Dto
         public DateOnly FechaFinal { get; set; }
         public DateTime FechaCreacion { get; set; }
         public DateTime? FechaModificacion { get; set; }
+        public List<ProductoPlanVentaIn> Productos { get; set; }
     }
 
     [ExcludeFromCodeCoverage]
     public class PlanVentasOut : BaseOut
     {
         public PlanVentaDto PlanVenta { get; set; }
-        public List<ProductoPlanVentaIn> Productos { get; set; }
     }
 
     [ExcludeFromCodeCoverage]
