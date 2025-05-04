@@ -21,15 +21,13 @@ namespace PlanesVentas.Aplicacion.Planes.Comandos
         }
         public async Task<PlanVentasOut> Handle(CrearPlanVentas request, CancellationToken cancellationToken)
         {
-            PlanVentasOut output = new() 
-            {
-                Productos = []
-            };
+            PlanVentasOut output = new();
 
             try
             {
                 var planVenta = _mapper.Map<PlanVenta>(request);
                 output.PlanVenta = _mapper.Map<PlanVentaDto>(await _servicio.Ejecutar(planVenta));
+                output.PlanVenta.Productos = [];
                 output.Resultado = Resultado.Exitoso;
                 output.Mensaje = "Plan de ventas creado correctamente";
                 output.Status = HttpStatusCode.OK;

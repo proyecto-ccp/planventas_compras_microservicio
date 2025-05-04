@@ -67,8 +67,9 @@ builder.Services.AddTransient<IPlanVentaRepositorio, PlanVentaRepositorio>();
 builder.Services.AddTransient<IProductosRepositorio, ProductosRepositorio>();
 //Capa Dominio - Servicios
 builder.Services.AddTransient<Crear>();
-builder.Services.AddTransient<PlanesVentas.Dominio.Servicios.Planes.Consultar>();
+builder.Services.AddTransient<ConsultarPlanes>();
 builder.Services.AddTransient<Agregar>();
+builder.Services.AddTransient<ConsultarProductos>();
 
 var app = builder.Build();
 
