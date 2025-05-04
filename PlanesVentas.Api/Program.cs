@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using PlanesVentas.Dominio.Puertos.Repositorios;
 using PlanesVentas.Dominio.Servicios.Planes;
+using PlanesVentas.Dominio.Servicios.Productos;
 using PlanesVentas.Infraestructura.Adaptadores.RepositorioGenerico;
 using PlanesVentas.Infraestructura.Adaptadores.Repositorios;
 using System.Reflection;
@@ -63,8 +64,11 @@ builder.Services.AddDbContext<PlanesVentasDbContext>(options =>
                 options.UseNpgsql(builder.Configuration.GetConnectionString("PlanesVentasDbContext")), ServiceLifetime.Transient);
 builder.Services.AddTransient(typeof(IRepositorioBase<>), typeof(RepositorioBase<>));
 builder.Services.AddTransient<IPlanVentaRepositorio, PlanVentaRepositorio>();
+builder.Services.AddTransient<IProductosRepositorio, ProductosRepositorio>();
 //Capa Dominio - Servicios
 builder.Services.AddTransient<Crear>();
+builder.Services.AddTransient<PlanesVentas.Dominio.Servicios.Planes.Consultar>();
+builder.Services.AddTransient<Agregar>();
 
 var app = builder.Build();
 

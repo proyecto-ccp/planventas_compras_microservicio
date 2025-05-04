@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Diagnostics.CodeAnalysis;
 using PlanesVentas.Dominio.Entidades;
-using Inventarios.Infraestructura.Adaptadores.Configuraciones;
+using PlanesVentas.Infraestructura.Adaptadores.Configuraciones;
 
 namespace PlanesVentas.Infraestructura.Adaptadores.Repositorios
 {
@@ -17,6 +17,7 @@ namespace PlanesVentas.Infraestructura.Adaptadores.Repositorios
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new PlanVentaConfiguracion());
+            modelBuilder.ApplyConfiguration(new ProductoPlanVentaConfiguracion());
         }
     }
 }

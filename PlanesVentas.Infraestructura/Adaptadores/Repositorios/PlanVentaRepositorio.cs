@@ -21,14 +21,14 @@ namespace PlanesVentas.Infraestructura.Adaptadores.Repositorios
             return await _repositorioPlanVenta.Guardar(planVenta);
         }
 
-        public Task<PlanVenta> ObtenerPorId(Guid id)
+        public async Task<PlanVenta> ObtenerPorId(Guid id)
         {
-            throw new NotImplementedException();
+            return await _repositorioPlanVenta.BuscarPorLlave(id);  
         }
 
-        public Task<List<PlanVenta>> ObtenerTodos()
+        public async Task<List<PlanVenta>> ObtenerTodos()
         {
-            throw new NotImplementedException();
+            return await _repositorioPlanVenta.DarListado();
         }
     }
 }

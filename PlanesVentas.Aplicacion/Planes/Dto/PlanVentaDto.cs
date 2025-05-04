@@ -20,6 +20,7 @@ namespace PlanesVentas.Aplicacion.Planes.Dto
     public class PlanVentasOut : BaseOut
     {
         public PlanVentaDto PlanVenta { get; set; }
+        public List<ProductoPlanVentaIn> Productos { get; set; }
     }
 
     [ExcludeFromCodeCoverage]
@@ -27,4 +28,6 @@ namespace PlanesVentas.Aplicacion.Planes.Dto
     {
         public List<PlanVentaDto> PlanesVentas { get; set; }
     }
+
+
 }

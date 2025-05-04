@@ -21,7 +21,10 @@ namespace PlanesVentas.Aplicacion.Planes.Comandos
         }
         public async Task<PlanVentasOut> Handle(CrearPlanVentas request, CancellationToken cancellationToken)
         {
-            PlanVentasOut output = new();
+            PlanVentasOut output = new() 
+            {
+                Productos = []
+            };
 
             try
             {
