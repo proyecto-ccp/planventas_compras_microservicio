@@ -5,7 +5,7 @@ using PlanesVentas.Dominio.Puertos.Repositorios;
 
 namespace PlanesVentas.Dominio.Servicios.Productos
 {
-    public class Agregar(IProductosRepositorio productosRepositorio)
+    public class AgregarProducto(IProductosRepositorio productosRepositorio)
     {
         private readonly IProductosRepositorio _productosRepositorio = productosRepositorio;
 

@@ -6,6 +6,7 @@ using PlanesVentas.Aplicacion.Comun;
 using PlanesVentas.Aplicacion.Planes.Dto;
 using PlanesVentas.Dominio.Servicios.Planes;
 using PlanesVentas.Dominio.Servicios.Productos;
+using PlanesVentas.Dominio.Servicios.Vendedores;
 using System.Net;
 
 namespace PlanesVentas.Aplicacion.Planes.Consultas
@@ -15,12 +16,14 @@ namespace PlanesVentas.Aplicacion.Planes.Consultas
         private readonly IMapper _mapper;
         private readonly ConsultarPlanes _servicioPlanes;
         private readonly ConsultarProductos _servicioProductos;
+        private readonly ConsultarVendedor _servicioVendedor;
 
-        public PlanesVentasConsultaHandler(IMapper mapper, ConsultarPlanes servicio, ConsultarProductos servicioProductos)
+        public PlanesVentasConsultaHandler(IMapper mapper, ConsultarPlanes servicio, ConsultarProductos servicioProductos, ConsultarVendedor servicioVendedor)
         {
             _mapper = mapper;
             _servicioPlanes = servicio;
             _servicioProductos = servicioProductos;
+            _servicioVendedor = servicioVendedor;   
         }
 
         public async Task<PlanVentasListOut> Handle(PlanesVentasConsulta request, CancellationToken cancellationToken)
@@ -39,11 +42,13 @@ namespace PlanesVentas.Aplicacion.Planes.Consultas
                 {
                     planes.ForEach(plan => output.PlanesVentas.Add(_mapper.Map<PlanVentaDto>(plan)));
 
-                    foreach (PlanVentaDto producto in output.PlanesVentas) 
+                    foreach (PlanVentaDto plan in output.PlanesVentas) 
                     {
-                        var productos = await _servicioProductos.Ejecutar(producto.Id) ?? [];
-                        producto.Productos = _mapper.Map<List<ProductoPlanVentaIn>>(productos);
+                        var productos = await _servicioProductos.Ejecutar(plan.Id) ?? [];
+                        plan.Productos = _mapper.Map<List<ProductoPlanVentaIn>>(productos);
 
+                        var vendedores = await _servicioVendedor.Ejecutar(plan.Id) ?? [];
+                        plan.Vendedores = _mapper.Map<List<VendedorPlanVentaIn>>(vendedores);
                     }
 
                     output.Resultado = Resultado.Exitoso;

@@ -15,6 +15,9 @@ namespace PlanesVentas.Aplicacion.Planes.Mapeadores
 
             CreateMap<ProductoPlanVentaIn, ProductoPlanVenta>().ReverseMap();
             CreateMap<ProductoPlanVenta, ProductoPlanVentaIn>().ReverseMap();
+
+            CreateMap<VendedorPlanVentaIn, VendedorPlanVenta>().ReverseMap();
+            CreateMap<VendedorPlanVenta, VendedorPlanVentaIn>().ReverseMap();
         }
 
     }

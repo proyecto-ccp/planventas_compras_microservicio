@@ -25,4 +25,12 @@ namespace PlanesVentas.Aplicacion.Planes.Comandos
         ) : IRequest<PlanVentasOut>;
 
 
+    public record AgregarVendedores(
+        [Required(ErrorMessage = "El campo IdPlanVenta es obligatorio")]
+        Guid IdPlanVenta,
+        [Required(ErrorMessage = "Los vendedores son obligatorios")]
+        List<VendedorPlanVentaIn> Vendedores
+    ) : IRequest<PlanVentasOut>;
+
+
 }
