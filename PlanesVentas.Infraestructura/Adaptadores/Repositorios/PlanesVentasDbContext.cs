@@ -18,6 +18,7 @@ namespace PlanesVentas.Infraestructura.Adaptadores.Repositorios
         {
             modelBuilder.ApplyConfiguration(new PlanVentaConfiguracion());
             modelBuilder.ApplyConfiguration(new ProductoPlanVentaConfiguracion());
+            modelBuilder.ApplyConfiguration(new VendedorPlanVentaConfiguracion());
         }
     }
 }

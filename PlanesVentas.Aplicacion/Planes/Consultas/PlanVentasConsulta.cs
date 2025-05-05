@@ -12,5 +12,9 @@ namespace PlanesVentas.Aplicacion.Planes.Consultas
         [Required(ErrorMessage = "El campo IdPlanVenta es obligatorio")]
         Guid IdPlanVenta
         ) : IRequest<PlanVentasOut>;
+    public record VendedoresPlanVentasConsulta(
+        [Required(ErrorMessage = "El campo IdPlanVenta es obligatorio")]
+        Guid IdPlanVenta
+    ) : IRequest<PlanVentasOut>;
 
 }

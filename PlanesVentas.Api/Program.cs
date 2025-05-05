@@ -3,6 +3,7 @@ using Microsoft.OpenApi.Models;
 using PlanesVentas.Dominio.Puertos.Repositorios;
 using PlanesVentas.Dominio.Servicios.Planes;
 using PlanesVentas.Dominio.Servicios.Productos;
+using PlanesVentas.Dominio.Servicios.Vendedores;
 using PlanesVentas.Infraestructura.Adaptadores.RepositorioGenerico;
 using PlanesVentas.Infraestructura.Adaptadores.Repositorios;
 using System.Reflection;
@@ -65,12 +66,15 @@ builder.Services.AddDbContext<PlanesVentasDbContext>(options =>
 builder.Services.AddTransient(typeof(IRepositorioBase<>), typeof(RepositorioBase<>));
 builder.Services.AddTransient<IPlanVentaRepositorio, PlanVentaRepositorio>();
 builder.Services.AddTransient<IProductosRepositorio, ProductosRepositorio>();
+builder.Services.AddTransient<IVendedoresRepositorio, VendedoresRepositorio>();
 //Capa Dominio - Servicios
 builder.Services.AddTransient<Crear>();
 builder.Services.AddTransient<ConsultarPlanes>();
 builder.Services.AddTransient<ConsultarPlan>(); 
-builder.Services.AddTransient<Agregar>();
+builder.Services.AddTransient<AgregarProducto>();
 builder.Services.AddTransient<ConsultarProductos>();
+builder.Services.AddTransient<AgregarVendedor>();
+builder.Services.AddTransient<ConsultarVendedor>();
 
 var app = builder.Build();
 
