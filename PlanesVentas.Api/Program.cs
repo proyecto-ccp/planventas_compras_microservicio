@@ -68,6 +68,7 @@ builder.Services.AddTransient<IProductosRepositorio, ProductosRepositorio>();
 //Capa Dominio - Servicios
 builder.Services.AddTransient<Crear>();
 builder.Services.AddTransient<ConsultarPlanes>();
+builder.Services.AddTransient<ConsultarPlan>(); 
 builder.Services.AddTransient<Agregar>();
 builder.Services.AddTransient<ConsultarProductos>();
 
