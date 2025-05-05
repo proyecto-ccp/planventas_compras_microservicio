@@ -15,6 +15,7 @@ namespace PlanesVentas.Aplicacion.Planes.Dto
         public DateTime FechaCreacion { get; set; }
         public DateTime? FechaModificacion { get; set; }
         public List<ProductoPlanVentaIn> Productos { get; set; }
+        public List<VendedorPlanVentaIn> Vendedores { get; set; }
     }
 
     [ExcludeFromCodeCoverage]

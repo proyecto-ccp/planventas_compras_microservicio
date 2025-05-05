@@ -23,7 +23,12 @@ namespace PlanesVentas.Aplicacion.Planes.Consultas
         }
         public async Task<PlanVentasOut> Handle(ProductosPlanVentasConsulta request, CancellationToken cancellationToken)
         {
-            PlanVentasOut output = new();
+            PlanVentasOut output = new()
+            {
+                PlanVenta = new PlanVentaDto()
+            };
+            output.PlanVenta.Vendedores = [];
+            output.PlanVenta.Productos = [];
 
             try
             {

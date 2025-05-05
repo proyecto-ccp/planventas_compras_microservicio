@@ -5,24 +5,26 @@ using PlanesVentas.Aplicacion.Comun;
 using PlanesVentas.Aplicacion.Planes.Dto;
 using PlanesVentas.Dominio.Entidades;
 using PlanesVentas.Dominio.Servicios.Planes;
-using PlanesVentas.Dominio.Servicios.Productos;
+using PlanesVentas.Dominio.Servicios.Vendedores;
 using System.Net;
 
 namespace PlanesVentas.Aplicacion.Planes.Comandos
 {
-    public class AgregarProductosHandler : IRequestHandler<AgregarProductos, PlanVentasOut>
+    public class AgregarVendedoresHandler : IRequestHandler<AgregarVendedores, PlanVentasOut>
     {
         private readonly IMapper _mapper;
-        private readonly AgregarProducto _servicioProductos;
+        private readonly AgregarVendedor _servicioVendedores;
         private readonly ConsultarPlan _servicioPlan;
 
-        public AgregarProductosHandler(IMapper mapper, AgregarProducto servicioProductos, ConsultarPlan servicioPlan) 
+        public AgregarVendedoresHandler(IMapper mapper, AgregarVendedor servicioVendedores, ConsultarPlan servicioPlan) 
         {
             _mapper = mapper;
-            _servicioProductos = servicioProductos;
+            _servicioVendedores = servicioVendedores;
             _servicioPlan = servicioPlan;
-        }     
-        public async Task<PlanVentasOut> Handle(AgregarProductos request, CancellationToken cancellationToken)
+        }
+
+
+        public async Task<PlanVentasOut> Handle(AgregarVendedores request, CancellationToken cancellationToken)
         {
             PlanVentasOut output = new()
             {
@@ -34,7 +36,7 @@ namespace PlanesVentas.Aplicacion.Planes.Comandos
             try
             {
                 var plan = await _servicioPlan.Ejecutar(request.IdPlanVenta);
-                
+
                 if (plan is null)
                 {
                     output.Resultado = Resultado.SinRegistros;
@@ -44,15 +46,15 @@ namespace PlanesVentas.Aplicacion.Planes.Comandos
                 else
                 {
                     output.PlanVenta = _mapper.Map<PlanVentaDto>(plan);
-                    foreach (ProductoPlanVentaIn producto in request.Productos)
+                    foreach (VendedorPlanVentaIn vendedor in request.Vendedores)
                     {
-                        var productoAgregar = _mapper.Map<ProductoPlanVenta>(producto);
-                        productoAgregar.IdPlanVenta = request.IdPlanVenta;
-                        await _servicioProductos.Ejecutar(productoAgregar);
+                        var vendedorAgregar = _mapper.Map<VendedorPlanVenta>(vendedor);
+                        vendedorAgregar.IdPlanVenta = request.IdPlanVenta;
+                        await _servicioVendedores.Ejecutar(vendedorAgregar);
                     }
-                    output.PlanVenta.Productos = request.Productos;
+                    output.PlanVenta.Vendedores = request.Vendedores;
                     output.Resultado = Resultado.Exitoso;
-                    output.Mensaje = "Productos asociados correctamente";
+                    output.Mensaje = "Vendedores asociados correctamente";
                     output.Status = HttpStatusCode.OK;
                 }
 
