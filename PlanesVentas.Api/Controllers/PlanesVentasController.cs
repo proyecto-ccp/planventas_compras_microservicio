@@ -116,5 +116,34 @@ namespace PlanesVentas.Api.Controllers
                 return Problem(output.Mensaje, statusCode: (int)output.Status);
             }
         }
+
+        /// <summary>
+        /// Consultar los productos a un plan de ventas
+        /// </summary>
+        /// <response code="200"> 
+        /// PlanVentasOut: objeto de salida <br/>
+        /// Resultado: Enumerador de la operación, Exitoso = 1, Error = 2, SinRegistros = 3 <br/>
+        /// Mensaje: Mensaje de la operación <br/>
+        /// Status: Código de estado HTTP <br/>
+        /// </response>
+        [HttpGet]
+        [Route("{IdPlanVentas}/Productos")]
+        [ProducesResponseType(typeof(PlanVentasOut), 200)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), 401)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), 500)]
+        public async Task<IActionResult> ConsultarProductos([FromRoute] Guid IdPlanVentas)
+        {
+            var output = await _mediator.Send(new ProductosPlanVentasConsulta(IdPlanVentas));
+
+            if (output.Resultado != Resultado.Error)
+            {
+                return Ok(output);
+            }
+            else
+            {
+                return Problem(output.Mensaje, statusCode: (int)output.Status);
+            }
+        }
     }
 }
